@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
-from design import *
-import sys, threading, keyboard, time, mouse, platform, ctypes
+from design import*
+import sys, threading, mouse, time, keyboard
 
 sleep_sec = 1
 
@@ -20,15 +20,6 @@ class Clicker:
             self.thread.join()
 
     def click_loop(self):
-        # Проверяем, что это Windows, перед попыткой установить приоритет
-        if platform.system() == "Windows":
-            try:
-                # Получаем текущий поток
-                handle = ctypes.windll.kernel32.GetCurrentThread()
-                # Устанавливаем приоритет THREAD_PRIORITY_HIGHEST
-                ctypes.windll.kernel32.SetThreadPriority(handle, 2)
-            except Exception as e:
-                print("Не удалось установить приоритет потока: ", e)
         next_click_time = time.perf_counter()
         while self.isClicking:
             current_time = time.perf_counter()
@@ -50,8 +41,8 @@ class MyWin(QtWidgets.QMainWindow):
         # Создаем экземпляр класса Clicker
         self.clicker = Clicker()
 
-        # Настраиваем горячие клавиши с помощью библиотеки keyboard
-        keyboard.add_hotkey('Alt + Z', self.toggle_clicker)
+        keyboard.add_hotkey(self.ui.HotKey_Edit.text(), self.toggle_clicker)
+
 
     def toggle_clicker(self):
         if self.clicker.isClicking:
@@ -61,8 +52,8 @@ class MyWin(QtWidgets.QMainWindow):
     
     def change_Hotkey(self):
         self.ui.HotKey_label.setText(self.ui.HotKey_Edit.text())
-        keyboard.clear_hotkey(self.toggle_clicker)
-        keyboard.add_hotkey(self.ui.HotKey_label.text(), self.toggle_clicker)
+        keyboard.remove_hotkey(self.ui.HotKey_Edit.text())
+        keyboard.add_hotkey(self.ui.HotKey_Edit.text(), self.toggle_clicker)
     
     def clicks_in_sec(self):
         global sleep_sec

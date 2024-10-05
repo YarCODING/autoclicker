@@ -87,8 +87,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.Name_Label.setText(_translate("MainWindow", "AutoClicker"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "AutoClicker-Lite"))
+        self.Name_Label.setText(_translate("MainWindow", "AutoClicker-Lite"))
         self.label_2.setText(_translate("MainWindow", "ON / OFF"))
         self.HotKey_label.setText(_translate("MainWindow", "Alt + Z"))
         self.label.setText(_translate("MainWindow", "Clicks Per Second"))
