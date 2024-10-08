@@ -52,8 +52,15 @@ class MyWin(QtWidgets.QMainWindow):
     
     def change_Hotkey(self):
         self.ui.HotKey_label.setText(self.ui.HotKey_Edit.text())
-        keyboard.remove_hotkey(self.ui.HotKey_Edit.text())
-        keyboard.add_hotkey(self.ui.HotKey_Edit.text(), self.toggle_clicker)
+        keyboard.clear_hotkey(self.toggle_clicker)
+        try:
+            keyboard.add_hotkey(self.ui.HotKey_label.text(), self.toggle_clicker)
+        except KeyError:
+            self.ui.HotKey_label.setText("Invalid hotkey")
+            keyboard.add_hotkey('Alt + Z', self.toggle_clicker)
+        except ValueError:
+            self.ui.HotKey_label.setText("Invalid hotkey")
+            keyboard.add_hotkey('Alt + Z', self.toggle_clicker)
     
     def clicks_in_sec(self):
         global sleep_sec
